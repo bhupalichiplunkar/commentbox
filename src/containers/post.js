@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Comments from '../components/comments';
 import { AddComment, ToggleLike } from '../reducers/post';
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
 
 class Post extends Component{
   constructor(props){
@@ -15,50 +12,37 @@ class Post extends Component{
     this.toggleCommentLike = this.toggleCommentLike.bind(this);
   }
 
-  addComment(text){
-    const {user, post} = this.props;
+  addComment(post){
     //can directly add her and send just post since without api
-    this.props.AddComment(user.id, post , {
-      id: post.id + getRandomInt(1000),
-      author: user.id,
-      timeStamp : new Date(),
-      content : text,
-      likes : [],
-      replies : []
-    });
+    this.props.AddComment(post);
   }
 
-  addReply(text, commentId){
-    const {user, post} = this.props;
-    //can directly add her and send just post since without api
-    this.props.AddReply(user, post, {
-      id: post.id + getRandomInt(1000),
-      author: user.id,
-      timeStamp : new Date(),
-      content : text,
-      likes : [],
-      replies : []
-    }, true, commentId);
+  addReply(post){
+    this.props.AddReply(post);
   }
 
-  togglePostLike(){
-    const {user, post} = this.props;
-    this.props.TogglePostLike(post, user);
+  togglePostLike(modifiedPost){
+    this.props.TogglePostLike(modifiedPost);
   }
 
-  toggleCommentLike(commentId){
-    const {user, post} = this.props;
-    this.props.ToggleCommentLike(post, true, commentId, user);
+  toggleCommentLike(post){
+    this.props.ToggleCommentLike(post);
   }
 
   render () {
     const {user, post} = this.props;
     return (
-      <div>
+      <div className="post-container">
         <figure>
           <img src={post.postImg} alt={post.caption} />
           <figcaption>
-            yolo
+            <Comments 
+              post={post} 
+              user={user} 
+              togglePostLike={this.togglePostLike}
+              toggleCommentLike={this.toggleCommentLike}
+              addComment={this.addComment}
+              addReply={this.addReply}/>
           </figcaption>
         </figure>
       </div>
@@ -77,10 +61,10 @@ const mapsStateToProps = ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  AddComment: (user, post, comment) =>dispatch(AddComment(user, post, comment)),
-  TogglePostLike: (user, post, comment) =>dispatch(ToggleLike(user, post)),
-  ToggleCommentLike: (user, post, isComment, commentId) =>dispatch(ToggleLike(user, post, isComment, commentId)),
-  AddReply: (user, post, comment, isReply, commentId) =>dispatch(AddComment(user, post, comment, isReply, commentId))
+  AddComment: (modifiedPost) =>dispatch(AddComment(modifiedPost)),
+  TogglePostLike: modifiedPost =>dispatch(ToggleLike(modifiedPost)),
+  ToggleCommentLike: (modifiedPost) =>dispatch(ToggleLike(modifiedPost)),
+  AddReply: (modifiedPost) =>dispatch(AddComment(modifiedPost))
 });
 
 export default connect(mapsStateToProps, mapDispatchToProps)(Post);

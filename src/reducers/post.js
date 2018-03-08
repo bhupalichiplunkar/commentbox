@@ -1,6 +1,7 @@
 import data from '../helpers';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const TOGGLE_LIKE = 'TOGGLE_LIKE';
+export const MODIFY_COMMENT = 'MODIFY_COMMENT';
 
 export const addComment = post => ({
   type: ADD_COMMENT,
@@ -12,12 +13,21 @@ export const toggleLike = post => ({
   post,
 });
 
-export const AddComment = (comment, isReply, commentId) => async dispatch => {
-  // dispatch(addComment(post));
+export const modifyComment = post => ({
+  type: MODIFY_COMMENT,
+  post,
+});
+
+export const AddComment = (post) => async dispatch => {
+  dispatch(addComment(post));
 };
 
-export const ToggleLike = (postId, isComment, commentId) => async dispatch => {
-  // dispatch(toggleLike(post));
+export const ToggleLike = (post) => async dispatch => {
+  dispatch(toggleLike(post));
+};
+
+export const ModifyComment = (post) => async dispatch => {
+  dispatch(modifyComment(post));
 };
 
 const initialState = {
@@ -28,6 +38,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_COMMENT:
+    case MODIFY_COMMENT:
     case TOGGLE_LIKE:
       return {
         ...state,

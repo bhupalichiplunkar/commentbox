@@ -12,22 +12,78 @@ const data = {
     id : 1,
     caption : 'my pic',
     postImg,
-    likes : ['Bhupali', 'Aradhana', 'Revati', 'Mandar', 'Lakhan'],
+    timeStamp : new Date(),
+    likes : [
+      {
+        id: 5,
+        fname : 'Bhupali',
+        lname : 'Chiplunkar',
+        profilePic
+      },
+      {
+        id: 6,
+        fname : 'Aradhana',
+        lname : 'Haldar',
+      },
+      {
+        id: 7,
+        fname : 'Revati',
+        lname : 'Ghadge',
+      },
+      {
+        id: 8,
+        fname : 'Lakhan',
+        lname : 'Suchdev',
+      },
+      {
+        id: 9,
+        fname : 'Mandar',
+        lname : 'Rane',
+      }
+    ],
     comments : [{
       id: 12,
-      author : 5,
+      author : {
+        id: 6,
+        fname : 'Aradhana',
+        lname : 'Haldar',
+      },
       timeStamp : new Date(),
       content : 'hey what a pretty picture',
-      likes : ['Bhupali', 'Aradhana'],
+      likes : [
+        {
+          id: 5,
+          fname : 'Bhupali',
+          lname : 'Chiplunkar',
+          profilePic
+        },
+        {
+          id: 6,
+          fname : 'Aradhana',
+          lname : 'Haldar',
+        }],
       replies : [{
         id: 123,
-        author : 'Bhupali',
+        author : {
+          id: 5,
+          fname : 'Bhupali',
+          lname : 'Chiplunkar',
+          profilePic
+        },
         timeStamp : new Date(),
         content : 'Thanks',
-        likes : ['Aradhana'],
+        likes : [{
+          id: 6,
+          fname : 'Aradhana',
+          lname : 'Haldar',
+        }],
       }]
     }]
   }
+}
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 export default data;
